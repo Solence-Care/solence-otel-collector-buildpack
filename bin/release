@@ -4,5 +4,5 @@
 cat <<EOF
 ---
 default_process_types:
-  web: ./bin/otelcol --config ./config/collector.yaml
+  web: ./bin/otelcol-contrib --config ./config/collector.yaml
 EOF
