@@ -7,4 +7,19 @@ curl -L -o otelcol-contrib.tar.gz https://github.com/open-telemetry/opentelemetr
 mkdir -p $BUILD_DIR/bin
 tar -xzf otelcol-contrib.tar.gz -C $BUILD_DIR/bin
 
+# Normalize binary name
+if [ -f "$BUILD_DIR/bin/otelcol-contrib" ]; then
+  mv $BUILD_DIR/bin/otelcol-contrib $BUILD_DIR/bin/otelcol
+fi
+
+chmod +x $BUILD_DIR/bin/otelcol
+
+# 🔎 Check that opensearch exporter is available
+if ! $BUILD_DIR/bin/otelcol components | grep -q "exporter/opensearch"; then
+  echo "❌ Error: This otelcol build does not include the opensearch exporter."
+  echo "   Make sure you are using otelcol-contrib, not otelcol core."
+  exit 1
+fi
+
+echo "✅ otelcol (contrib) installed successfully with OpenSearch support"
 echo "-----> Buildpack installation done"
