@@ -1,0 +1,8 @@
+#!/bin/bash
+# This script tells what process types are available by default
+# Here we define that the "web" process runs OpenTelemetry Collector with the config
+cat <<EOF
+---
+default_process_types:
+  web: ./bin/otelcol --config ./config/collector.yaml
+EOF

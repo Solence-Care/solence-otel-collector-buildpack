@@ -1,0 +1,4 @@
+#!/bin/bash
+# Always detect this app as "OpenTelemetry Collector"
+echo "OpenTelemetry Collector"
+exit 0

@@ -1,0 +1,10 @@
+#!/bin/bash
+BUILD_DIR=$1
+
+echo "-----> Downloading OpenTelemetry Collector"
+curl -L -o otelcol.tar.gz https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.136.0/otelcol_0.136.0_linux_amd64.tar.gz
+
+mkdir -p $BUILD_DIR/bin
+tar -xzf otelcol.tar.gz -C $BUILD_DIR/bin
+
+echo "-----> Buildpack installation done"
