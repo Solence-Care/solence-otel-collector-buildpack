@@ -2,7 +2,7 @@
 BUILD_DIR=$1
 
 echo "-----> Downloading OpenTelemetry Collector (contrib version)"
-curl -L -o otelcol-contrib.tar.gz https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.136.0/otelcol-contrib_0.136.0_linux_amd64.tar.gz
+curl -L -o otelcol-contrib.tar.gz https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.148.0/otelcol-contrib_0.148.0_linux_amd64.tar.gz
 
 mkdir -p $BUILD_DIR/bin
 tar -xzf otelcol-contrib.tar.gz -C $BUILD_DIR/bin
