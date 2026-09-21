@@ -1,8 +1,20 @@
 #!/bin/bash
 BUILD_DIR=$1
 
-echo "-----> Downloading OpenTelemetry Collector (contrib version)"
-curl -L -o otelcol-contrib.tar.gz https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.148.0/otelcol-contrib_0.148.0_linux_amd64.tar.gz
+# Version of otelcol-contrib to install. Set OTELCOL_VERSION in the app's
+# environment (Terraform owns it, one value per environment) so an app never
+# changes collector version on its own: a plain redeploy rebuilds the same
+# version. The default below is only a safety net for an app that sets nothing.
+OTELCOL_VERSION="${OTELCOL_VERSION:-v0.148.0}"
+OTELCOL_VERSION_NUMBER="${OTELCOL_VERSION#v}"
+
+echo "-----> Downloading OpenTelemetry Collector (contrib version) ${OTELCOL_VERSION}"
+curl -fL -o otelcol-contrib.tar.gz "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/${OTELCOL_VERSION}/otelcol-contrib_${OTELCOL_VERSION_NUMBER}_linux_amd64.tar.gz"
+if [ $? -ne 0 ]; then
+  echo "❌ Error: could not download otelcol-contrib ${OTELCOL_VERSION}."
+  echo "   Check that OTELCOL_VERSION names an existing release (e.g. v0.161.0)."
+  exit 1
+fi
 
 mkdir -p $BUILD_DIR/bin
 tar -xzf otelcol-contrib.tar.gz -C $BUILD_DIR/bin
